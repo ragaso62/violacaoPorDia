@@ -20,6 +20,16 @@ The project currently focuses on:
 
 The data comes from a real Minecraft server and is collected through an API developed specifically for this project.
 
+## ⚠️ Requirements
+
+This project is a **standalone client** that visualizes data through a REST API. It does **not** work on its own — it depends on the backend from [`comunidade-minecraft-api`](https://github.com/ragaso62/comunidade-minecraft-api), which must be running locally (`http://localhost:8080`) before starting this application.
+
+The backend is responsible for:
+- Importing raw server data (SQLite → MySQL)
+- Exposing the REST endpoints consumed by this project
+
+Without it running, the application will fail with a connection/404 error on startup.
+
 ## Anti-Cheat Analysis
 
 One of the current analyses uses data from GrimAC.
@@ -32,7 +42,7 @@ The graph shows the number of violations recorded each day:
 
 The analysis shows two major spikes in violations, with the largest occurring on 06/09, reaching around 1060 violations. Most of this activity was concentrated on two players: `ninja_br1` and `_pret0`.
 
-After enabling an automatic kick at 30 violations, the number of violations dropped significantly. This may indicate that the new punishment rule helped reduce suspicious behavior.
+After enabling an automatic kick at 30 violations, the number of violations dropped significantly. Notably, this measure did not remove the players from the server — it appears to have discouraged the behavior itself, suggesting the drop reflects an actual behavioral change rather than data being cut off.
 
 However, the total number of violations alone does not show the full picture.
 
@@ -41,9 +51,9 @@ However, the total number of violations alone does not show the full picture.
 | ninja_br1 | 1176 | 923 | 3143 |
 | _pret0 | 875 | 118 | 771 |
 
-Even though the number of violations is relatively similar, their intensity is very different.
+Even though the total number of violations is relatively similar, their intensity is very different — `ninja_br1` shows far fewer but much more severe violations on average, while `_pret0` shows more frequent but milder ones.
 
-Because of this, a future analysis will test metrics that combine the **number and intensity of violations**, instead of relying only on the total count.
+**Open question:** total violation count alone cannot determine which player represents the greater actual risk. Because of this, a future analysis will test metrics that combine the **number and intensity of violations** (e.g. `total × average level`) instead of relying only on the raw count.
 
 ## Data Quality
 
@@ -67,6 +77,7 @@ DOI: `10.1080/07421222.1996.11518099`
 - GrimAC
 - AuthMe
 - REST API
+- C# / WinForms / ScottPlot
 
 ## Project Structure
 
